@@ -30,5 +30,6 @@ Jest koristi Babel za ES module i JSX. Okruženje jsdom služi za testove kompon
 | Komit | Datoteka | Labela u zbirci |
 | --- | --- | --- |
 | Primer 1.5.1 | `src/tests/proveriImejl.test.js` | `prim:test-imejl` |
+| Zadatak 1.5.1 | `src/tests/korisnickaPolja.test.js` | `zad:test-polja` |
 
 Numeracija odgovara aktuelnoj zbirci: poglavlje „Klijentsko veb programiranje” je prvo aktivno poglavlje, a testiranje peta sekcija. Prethodna poglavlja su trenutno komentarisana u glavnom LaTeX izvoru.
