@@ -1,0 +1,50 @@
+{
+	"name": "React + FastAPI + PostgreSQL (DockerHub)",
+	"image": "sljelic/grf-oas-vp:react-fastapi-dev",
+	"remoteUser": "root",
+	"workspaceMount": "source=${localWorkspaceFolder},target=/workspaces/${localWorkspaceFolderBasename},type=bind,consistency=cached",
+	"workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
+	"forwardPorts": [
+		3000,
+		8000
+	],
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"ms-python.python",
+				"ms-python.vscode-pylance",
+				"esbenp.prettier-vscode",
+				"dbaeumer.vscode-eslint",
+				"ms-python.black-formatter",
+				"dsznajder.es7-react-js-snippets",
+				"ecmel.vscode-html-css",
+				"antfu.vite",
+				"vivaxy.vscode-conventional-commits",
+				"streetsidesoftware.code-spell-checker-serbian",
+				"streetsidesoftware.code-spell-checker",
+				"jonnywintech.serbian-latin-to-cyrilic-converter",
+				"mhutchie.git-graph"
+			],
+			"settings": {
+				"python.languageServer": "Pylance",
+				"python.analysis.typeCheckingMode": "basic",
+				"editor.formatOnSave": true,
+				"[python]": {
+					"editor.defaultFormatter": "ms-python.black-formatter",
+					"editor.codeActionsOnSave": {
+						"source.organizeImports": "explicit"
+					}
+				},
+				"[javascript]": {
+					"editor.defaultFormatter": "esbenp.prettier-vscode"
+				},
+				"[javascriptreact]": {
+					"editor.defaultFormatter": "esbenp.prettier-vscode"
+				},
+				"vite.devCommand": "npm run dev",
+                "files.eol": "\n"
+			}
+		}
+	},
+	"postCreateCommand": "npm --prefix ./frontend update"
+}
