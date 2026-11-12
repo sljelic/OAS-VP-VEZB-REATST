@@ -30,7 +30,8 @@ export default function Registracija() {
       prezime: proveriPrezime,
       email: proveriImejl,
       lozinka: proveriLozinku,
-      potvrdaLozinke: proveriLozinku,
+      potvrdaLozinke: (vrednost, podaci) => proveriLozinku(vrednost) ||
+        (vrednost === podaci.lozinka ? "" : "Лозинке се не подударају."),
     },
     // callback koji se poziva kada se forma šalje
     useCallback(
@@ -39,7 +40,7 @@ export default function Registracija() {
           ime: ime.trim(),
           prezime: prezime.trim(),
           email: email.trim().toLowerCase(),
-          lozinka: lozinka.trim(),
+          lozinka,
         }),
       [],
     ),
@@ -67,7 +68,7 @@ export default function Registracija() {
                 name="ime"
                 type="text"
                 autoComplete="given-name"
-                value={stanje.ime}
+                value={stanje.podaci.ime}
                 onChange={promeni}
                 isInvalid={Boolean(stanje.greske_validacije.ime)}
               />
@@ -81,7 +82,7 @@ export default function Registracija() {
                 name="prezime"
                 type="text"
                 autoComplete="family-name"
-                value={stanje.prezime}
+                value={stanje.podaci.prezime}
                 onChange={promeni}
                 isInvalid={Boolean(stanje.greske_validacije.prezime)}
               />
@@ -95,7 +96,7 @@ export default function Registracija() {
                 name="email"
                 type="email"
                 autoComplete="username"
-                value={stanje.email}
+                value={stanje.podaci.email}
                 onChange={promeni}
                 isInvalid={Boolean(stanje.greske_validacije.email)}
               />
@@ -110,7 +111,7 @@ export default function Registracija() {
                 name="lozinka"
                 type="password"
                 autoComplete="new-password"
-                value={stanje.lozinka}
+                value={stanje.podaci.lozinka}
                 onChange={promeni}
                 isInvalid={Boolean(stanje.greske_validacije.lozinka)}
               />
@@ -128,7 +129,7 @@ export default function Registracija() {
                 name="potvrdaLozinke"
                 type="password"
                 autoComplete="new-password"
-                value={stanje.potvrdaLozinke}
+                value={stanje.podaci.potvrdaLozinke}
                 onChange={promeni}
                 isInvalid={Boolean(stanje.greske_validacije.potvrdaLozinke)}
               />

@@ -24,12 +24,13 @@ export async function registracija({
   lozinka,
   uloge = ["student"],
 }) {
+  const hes = await hesirajLozinku(lozinka);
   const zapis = {
     id: Math.max(0, ...korisnici.map((k) => k.id)) + 1,
     ime,
     prezime,
     email,
-    lozinka,
+    lozinka: hes,
     uloge,
   };
 

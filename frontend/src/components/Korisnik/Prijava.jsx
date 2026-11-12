@@ -1,6 +1,6 @@
 import { useCallback } from "react";
 import { Alert, Button, Col, Container, Form, Nav, Row } from "react-bootstrap";
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
 import { useKorisnik } from "../../context/useKorisnik.js";
 import { useForm } from "../../hooks/form.js";
 import { prijava } from "../../services/korisnik.js";
@@ -9,6 +9,7 @@ import { proveriImejl, proveriLozinku } from "../../validations/korisnik.js";
 export default function Prijava() {
   const { korisnik, postaviKorisnika } = useKorisnik();
   const navigate = useNavigate();
+  const location = useLocation();
 
   const { stanje, promeni, izvrsi } = useForm(
     { email: "", lozinka: "" },
@@ -17,20 +18,9 @@ export default function Prijava() {
       email: proveriImejl,
       lozinka: proveriLozinku,
     },
-    // callback koji se poziva kada se forma šalje
-    useCallback(async ({ email, lozinka }) => {
-      return await prijava({
-        email: email.trim().toLowerCase(),
-        lozinka: lozinka.trim(),
-      });
-    }, []),
-    // callback koji se poziva kada se forma šalje
-    useCallback(async ({ email, lozinka }) => {
-      return await prijava({
-        email: email.trim().toLowerCase(),
-        lozinka: lozinka.trim(),
-      });
-    }, []),
+    useCallback(async ({ email, lozinka }) => prijava({
+      email: email.trim().toLowerCase(), lozinka,
+    }), []),
     // callback koji se poziva kada je forma uspešno poslata
     useCallback(
       (k) => {
@@ -47,6 +37,9 @@ export default function Prijava() {
       <Row className="justify-content-center">
         <Col xs={12} md={8} lg={5}>
           <h1>Пријава</h1>
+          {location.state?.poruka && (
+            <Alert variant="success">{location.state.poruka}</Alert>
+          )}
           {stanje.status === "greska" && (
             <Alert variant="danger">{stanje.greska_nakon_slanja}</Alert>
           )}
@@ -58,7 +51,7 @@ export default function Prijava() {
                 name="email"
                 type="email"
                 autoComplete="username"
-                value={stanje.email}
+                value={stanje.podaci.email}
                 onChange={promeni}
                 isInvalid={Boolean(stanje.greske_validacije.email)}
               />
@@ -73,7 +66,7 @@ export default function Prijava() {
                 name="lozinka"
                 type="password"
                 autoComplete="current-password"
-                value={stanje.lozinka}
+                value={stanje.podaci.lozinka}
                 onChange={promeni}
                 isInvalid={Boolean(stanje.greske_validacije.lozinka)}
               />
